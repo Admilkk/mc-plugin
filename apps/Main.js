@@ -3,7 +3,6 @@ import RconManager from "../components/Rcon.js";
 import WebSocketManager from "../components/WebSocket.js";
 import Config from "../components/Config.js";
 import axios from "axios";
-import FormData from "form-data";
 const LOG_PREFIX_CLIENT = logger.blue("[Minecraft Client] ");
 const LOG_PREFIX_RCON = logger.blue("[Minecraft RCON] ");
 const LOG_PREFIX_WS = logger.blue("[Minecraft WebSocket] ");
