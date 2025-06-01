@@ -6,22 +6,22 @@ import { pluginRoot } from "./model/path.js";
 export function supportGuoba() {
   return {
     pluginInfo: {
-      name: 'mc-plugin',
-      title: '我的世界插件',
-      author: ['@CikeyQi', '@erzaozi'],
-      authorLink: ['https://github.com/erzaozi', 'https://github.com/CikeyQi'],
-      link: 'https://github.com/CikeyQi/mc-plugin',
+      name: "mc-plugin",
+      title: "我的世界插件",
+      author: ["@CikeyQi", "@erzaozi"],
+      authorLink: ["https://github.com/erzaozi", "https://github.com/CikeyQi"],
+      link: "https://github.com/CikeyQi/mc-plugin",
       isV3: true,
       isV2: false,
       showInMenu: true,
-      description: '基于 Yunzai 的 Minecraft 消息互通插件',
+      description: "基于 Yunzai 的 Minecraft 消息互通插件",
       // 显示图标，此为个性化配置
       // 图标可在 https://icon-sets.iconify.design 这里进行搜索
-      icon: 'noto:video-game',
+      icon: "noto:video-game",
       // 图标颜色，例：#FF0000 或 rgb(255, 0, 0)
-      iconColor: '#1bb61e',
+      iconColor: "#1bb61e",
       // 如果想要显示成图片，也可以填写图标路径（绝对路径）
-      iconPath: path.join(pluginRoot, 'resources/readme/girl.png'),
+      iconPath: path.join(pluginRoot, "resources/readme/girl.png"),
     },
     configInfo: {
       schemas: [
@@ -45,7 +45,7 @@ export function supportGuoba() {
           bottomHelpMessage: "*非必要请不要修改此项",
           component: "Input",
           componentProps: {
-            placeholder: '例：/minecraft/ws',
+            placeholder: "例：/minecraft/ws",
           },
         },
         {
@@ -54,7 +54,7 @@ export function supportGuoba() {
           bottomHelpMessage: "反向 WebSocket 服务监听端口",
           component: "InputNumber",
           componentProps: {
-            placeholder: '例：8080',
+            placeholder: "例：8080",
             min: 1,
             max: 65535,
             step: 1,
@@ -66,7 +66,7 @@ export function supportGuoba() {
           bottomHelpMessage: "反向 WebSocket 服务 Access Token",
           component: "InputPassword",
           componentProps: {
-            placeholder: '请输入密钥',
+            placeholder: "请输入密钥",
             visible: false,
           },
         },
@@ -96,7 +96,7 @@ export function supportGuoba() {
           bottomHelpMessage: "请输入修饰词",
           component: "Input",
           componentProps: {
-            placeholder: '例：说：',
+            placeholder: "例：说：",
           },
         },
         {
@@ -128,7 +128,7 @@ export function supportGuoba() {
                 component: "Input",
                 required: true,
                 componentProps: {
-                  placeholder: '需要与服务器端配置一致，且不能有重复',
+                  placeholder: "需要与服务器端配置一致，且不能有重复",
                 },
               },
               {
@@ -151,7 +151,7 @@ export function supportGuoba() {
                 bottomHelpMessage: "正向 WebSocket 连接地址",
                 component: "Input",
                 componentProps: {
-                  placeholder: '例：ws://127.0.0.1:8081',
+                  placeholder: "例：ws://127.0.0.1:8081",
                 },
               },
               {
@@ -160,7 +160,7 @@ export function supportGuoba() {
                 bottomHelpMessage: "正向 WebSocket 服务 Access Token",
                 component: "Input",
                 componentProps: {
-                  placeholder: '请输入密钥',
+                  placeholder: "请输入密钥",
                 },
               },
               {
@@ -169,7 +169,7 @@ export function supportGuoba() {
                 bottomHelpMessage: "正向 WebSocket 重连最大尝试次数",
                 component: "InputNumber",
                 componentProps: {
-                  placeholder: '例：3',
+                  placeholder: "例：3",
                   min: 1,
                   max: 999999,
                   step: 1,
@@ -195,7 +195,7 @@ export function supportGuoba() {
                 bottomHelpMessage: "请输入Rcon地址",
                 component: "Input",
                 componentProps: {
-                  placeholder: '例：127.0.0.1',
+                  placeholder: "例：127.0.0.1",
                 },
               },
               {
@@ -204,7 +204,7 @@ export function supportGuoba() {
                 bottomHelpMessage: "请输入Rcon端口",
                 component: "InputNumber",
                 componentProps: {
-                  placeholder: '例：25575',
+                  placeholder: "例：25575",
                   min: 1,
                   max: 65535,
                   step: 1,
@@ -216,7 +216,7 @@ export function supportGuoba() {
                 bottomHelpMessage: "请输入Rcon密码",
                 component: "InputPassword",
                 componentProps: {
-                  placeholder: '与server.properties中的rcon.password一致',
+                  placeholder: "与server.properties中的rcon.password一致",
                   visible: false,
                 },
               },
@@ -226,7 +226,7 @@ export function supportGuoba() {
                 bottomHelpMessage: "Rcon 重连最大尝试次数",
                 component: "InputNumber",
                 componentProps: {
-                  placeholder: '例：3',
+                  placeholder: "例：3",
                   min: 1,
                   max: 999999,
                   step: 1,
@@ -247,19 +247,17 @@ export function supportGuoba() {
                 component: "GTags",
                 required: true,
                 componentProps: {
-                  placeholder: '请输入群组ID',
+                  placeholder: "请输入群组ID",
                   allowAdd: true,
                   allowDel: true,
                   showPrompt: true,
                   promptProps: {
-                    content: '请输入群组ID',
-                    placeholder: '例：551081559',
-                    okText: '添加',
-                    rules: [
-                      { required: true, message: '群组ID不能为空' },
-                    ],
+                    content: "请输入群组ID",
+                    placeholder: "例：551081559",
+                    okText: "添加",
+                    rules: [{ required: true, message: "群组ID不能为空" }],
                   },
-                  valueParser: ((value) => value.split(',') || []),
+                  valueParser: (value) => value.split(",") || [],
                 },
               },
               {
@@ -269,19 +267,17 @@ export function supportGuoba() {
                 component: "GTags",
                 required: true,
                 componentProps: {
-                  placeholder: '请输入机器人ID',
+                  placeholder: "请输入机器人ID",
                   allowAdd: true,
                   allowDel: true,
                   showPrompt: true,
                   promptProps: {
-                    content: '请输入机器人ID',
-                    placeholder: '例：10001',
-                    okText: '添加',
-                    rules: [
-                      { required: true, message: '群组ID不能为空' },
-                    ],
+                    content: "请输入机器人ID",
+                    placeholder: "例：10001",
+                    okText: "添加",
+                    rules: [{ required: true, message: "群组ID不能为空" }],
                   },
-                  valueParser: ((value) => value.split(',') || []),
+                  valueParser: (value) => value.split(",") || [],
                 },
               },
               {
@@ -291,7 +287,7 @@ export function supportGuoba() {
                 component: "Input",
                 required: true,
                 componentProps: {
-                  placeholder: '例：/',
+                  placeholder: "例：/",
                 },
               },
               {
@@ -301,19 +297,17 @@ export function supportGuoba() {
                 component: "GTags",
                 required: true,
                 componentProps: {
-                  placeholder: '请输入可用指令的用户ID',
+                  placeholder: "请输入可用指令的用户ID",
                   allowAdd: true,
                   allowDel: true,
                   showPrompt: true,
                   promptProps: {
-                    content: '请输入可用指令的用户ID',
-                    placeholder: '例：10001',
-                    okText: '添加',
-                    rules: [
-                      { required: true, message: '用户ID不能为空' },
-                    ],
+                    content: "请输入可用指令的用户ID",
+                    placeholder: "例：10001",
+                    okText: "添加",
+                    rules: [{ required: true, message: "用户ID不能为空" }],
                   },
-                  valueParser: ((value) => value.split(',') || []),
+                  valueParser: (value) => value.split(",") || [],
                 },
               },
               {
@@ -322,7 +316,7 @@ export function supportGuoba() {
                 bottomHelpMessage: "请输入屏蔽词正则表达式",
                 component: "Input",
                 componentProps: {
-                  placeholder: '例：§.',
+                  placeholder: "例：§.",
                 },
               },
             ],
@@ -336,20 +330,20 @@ export function supportGuoba() {
         },
       ],
       getConfigData() {
-        let config = Config.getConfig()
-        return config
+        let config = Config.getConfig();
+        return config;
       },
 
       setConfigData(data, { Result }) {
-        let config = {}
+        let config = {};
         for (let [keyPath, value] of Object.entries(data)) {
-          lodash.set(config, keyPath, value)
+          lodash.set(config, keyPath, value);
         }
-        config = lodash.merge({}, Config.getConfig(), config)
-        config.mc_qq_server_list = data['mc_qq_server_list']
-        Config.setConfig(config)
-        return Result.ok({}, '保存成功~')
+        config = lodash.merge({}, Config.getConfig(), config);
+        config.mc_qq_server_list = data["mc_qq_server_list"];
+        Config.setConfig(config);
+        return Result.ok({}, "保存成功~");
       },
     },
-  }
+  };
 }

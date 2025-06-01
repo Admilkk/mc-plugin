@@ -1,5 +1,5 @@
-import fs from 'node:fs';
-import Init from './model/init.js';
+import fs from "node:fs";
+import Init from "./model/init.js";
 
 if (!global.segment) {
   global.segment = (await import("oicq")).segment;
@@ -10,20 +10,20 @@ let ret = [];
 logger.info(logger.yellow("- 正在载入 MC-PLUGIN"));
 
 const files = fs
-  .readdirSync('./plugins/mc-plugin/apps')
-  .filter((file) => file.endsWith('.js'));
+  .readdirSync("./plugins/mc-plugin/apps")
+  .filter((file) => file.endsWith(".js"));
 
 files.forEach((file) => {
-  ret.push(import(`./apps/${file}`))
-})
+  ret.push(import(`./apps/${file}`));
+});
 
 ret = await Promise.allSettled(ret);
 
 let apps = {};
 for (let i in files) {
-  let name = files[i].replace('.js', '');
+  let name = files[i].replace(".js", "");
 
-  if (ret[i].status !== 'fulfilled') {
+  if (ret[i].status !== "fulfilled") {
     logger.error(`载入插件错误：${logger.red(name)}`);
     logger.error(ret[i].reason);
     continue;
@@ -32,6 +32,8 @@ for (let i in files) {
 }
 
 logger.info(logger.green("- MC-PLUGIN 载入成功"));
-logger.info(logger.magenta(`- 欢迎加入新组织【貓娘樂園🍥🏳️‍⚧️】（群号 707331865）`));
+logger.info(
+  logger.magenta(`- 欢迎加入新组织【貓娘樂園🍥🏳️‍⚧️】（群号 707331865）`),
+);
 
 export { apps };
