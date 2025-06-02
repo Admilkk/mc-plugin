@@ -12,19 +12,12 @@ export class Main extends plugin {
 		super({
 			name: 'MCQQ-消息同步',
 			event: 'message',
-			priority: 1009,
-			rule: [
-				{
-					reg: '',
-					fnc: 'handleSync',
-					log: false
-				}
-			]
+			priority: 1009
 		});
 	}
 
-	async handleSync(e) {
-		if (!e.isGroup || (TRSS ? Bot.uin.includes(e.user_id) : Bot.uin == e.user_id)) {
+	async accept(e) {
+		if (!e?.isGroup || (TRSS ? Bot.uin.includes(e?.user_id) : Bot.uin == e?.user_id) || !e?.message) {
 			return false;
 		}
 
@@ -103,50 +96,76 @@ export class Main extends plugin {
 		}
 	}
 
-	_formatMinecraftMessage(e, globalConfig) {
+	async _formatMinecraftMessage(e, globalConfig) {
 		const {
 			mc_qq_send_group_name: prefixGroup,
 			mc_qq_say_way: saySuffix,
 			mc_qq_chat_image_enable: imageAsCICode
 		} = globalConfig;
-		let messagePrefix = `${prefixGroup ? `[${e.group_name}] ` : ''}[${e.sender.nickname}] ${saySuffix || '说:'} `;
-
-		e.message.forEach((element) => {
-			switch (element.type) {
-				case 'text':
-					messagePrefix += element.text.replace(/\r/g, '').replace(/\n/g, '\n * ');
-					break;
-				case 'image':
-					if (imageAsCICode) {
-						const { url } = element;
-						axios
-							.post('http:/127.0.0.1:81/api/img/gitcode', {
-								url: url
-							})
-							.then((res) => {
-								if (res.status == 200) {
-									messagePrefix += `[[CICode,url=${res.data.url},name=图片]]`;
-								} else {
-									messagePrefix += `[图片]`;
-								}
-							});
-					} else {
-						messagePrefix += `[图片]`;
-					}
-					break;
-				default:
-					messagePrefix += `[${element.type}] ${element.text || element.raw_message || ''}`;
-					break;
+		let messagePrefix = [
+			{
+				msg: `${prefixGroup ? `[${e.group_name}] ` : ''}[${e.sender.nickname}] ${saySuffix || '说:'} `,
+				index: 0
 			}
-		});
-		return messagePrefix;
+		];
+
+		await Promise.all(
+			e.message.map(async (element, index) => {
+				index = index + 1;
+				switch (element.type) {
+					case 'text':
+						messagePrefix.push({
+							msg: element.text.replace(/\r/g, '').replace(/\n/g, '\n * '),
+							index: index
+						});
+						break;
+					case 'image':
+						if (imageAsCICode) {
+							const { url } = element;
+							await axios
+								.post('http:/127.0.0.1:81/api/img/keep', {
+									url: url
+								})
+								.then((res) => {
+									if (res.status == 200) {
+										messagePrefix.push({
+											msg: `[[CICode,url=${res.data.url},name=图片]]`,
+											index: index
+										});
+									} else {
+										messagePrefix.push({
+											msg: `[图片]`,
+											index: index
+										});
+									}
+								});
+						} else {
+							messagePrefix.push({
+								msg: `[图片]`,
+								index: index
+							});
+						}
+						break;
+					default:
+						messagePrefix.push({
+							msg: `[${element.type}] ${element.text || element.raw_message || ''}`,
+							index: index
+						});
+						break;
+				}
+			})
+		);
+		return messagePrefix
+			.sort((a, b) => a.index - b.index)
+			.map((item) => item.msg)
+			.join('');
 	}
 
 	async _handleChatMessageSync(e, serverCfg, wsConn, rconConn, globalConfig) {
 		const serverName = serverCfg.server_name;
 		const { debug_mode: debugMode } = globalConfig;
 
-		const message = this._formatMinecraftMessage(e, globalConfig);
+		const message = await this._formatMinecraftMessage(e, globalConfig);
 
 		if (wsConn) {
 			const wsPayload = JSON.stringify({
